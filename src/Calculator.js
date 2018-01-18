@@ -9,15 +9,22 @@ class Calculator extends Component {
 		}
 
 		this.calculateTotal = this.calculateTotal.bind(this);
+		this.handleInputs = this.handleInputs.bind(this);
+
 	}
 
-	calculateTotal(event) {
-		event.preventDefault();
-		if(event.target.value===''){
-			this.setState({total: 0});
-		} else {
-			this.setState({total: parseInt(this.state.total + parseInt(event.target.value))});
+	handleInputs(e) {
+		//e.preventDefault();
+		let newNum = parseInt(e.target.value);
+		if(!newNum) {
+			newNum = 0;
 		}
+		this.setState({[e.target.name]: newNum});
+		console.log(this.state);
+	}
+
+	calculateTotal() {
+		this.setState({total: this.state.num1+this.state.num2});
   	}
 
 	render() {
@@ -26,9 +33,9 @@ class Calculator extends Component {
 		<div className="container">
   		<h1>Add with React!</h1>
 		  <div className="add">
-		    <input type="text" onInput={(e) => this.calculateTotal(e)} />
+		    <input type="text" name="num1" onChange={this.handleInputs}/>
 		    <span>+</span>
-		    <input type="text" onInput={(e) => this.calculateTotal(e)} />
+		    <input type="text" name="num2" onChange={this.handleInputs}/>
 		    <span>=</span>
 		    <h3>{this.state.total}</h3>
 		  </div>
